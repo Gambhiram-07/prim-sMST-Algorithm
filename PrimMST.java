@@ -12,31 +12,39 @@ public class PrimMST {
         };
         primMST(graph);
     }
-    public  static void PrimMST(int[][] graph){
+    public  static void primMST(int[][] graph){
         int V = graph.length;
         int[] row = new int[V];
         int[] col = new int[V];
+        boolean[] visited = new boolean[V];
         for(int i=0; i<V; i++){
             row[i] = Integer.MAX_VALUE;
             col[i] = -1;
         }
         row[0] = 0;
+
         for(int count=0; count<V-1; count++){
             int min = Integer.MAX_VALUE;
             int minIndex = -1;
             for(int i=0; i<V; i++){
-                if(row[i] < min){
+                if(!visited[i] && row[i] < min){
                     min = row[i];
                     minIndex = i;
                 }
             }
+            visited[minIndex] = true;
+
             for(int j=0; j<V; j++){
-                if(graph[minIndex][j] != 0 && graph[minIndex][j] < row[j]){
+                if(graph[minIndex][j] != 0 && !visited[j] &&  graph[minIndex][j] < row[j]){
                     row[j] = graph[minIndex][j];
                     col[j] = minIndex;
                 }
             }
         }
+        for(int i=1; i<V; i++){
+            System.out.println(col[i] + " - " + i);
+        }
+
     }
     
 }
